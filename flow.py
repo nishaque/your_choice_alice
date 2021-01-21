@@ -72,7 +72,6 @@ def predetermine(phase, option_chosen, session_data):
                 get_followed_by_end(phase, fin_msg, session_data)
                 return
     phase.dialogue = _(option_chosen.status_td) if option_chosen.status_td is not None else ""
-    print(phase.dialogue)
     if session_data.move_count >= len(session_data.scenario.choices):
         msg = _(session_data.dial["no_choices"]) + \
               _(session_data.dial["fin"]).format(session_data.scores())
@@ -171,7 +170,6 @@ class Phase:
         if self.justpass:
             return self.next[0]["phs"]
         for direction in self.next:
-            print(utterance, direction["kw"])
             if utterance in direction["kw"]:
                 return direction["phs"]
         if self.confused_count == 0 and self.confused_d != "":
@@ -239,9 +237,8 @@ class SessionData:
         if self.end_session:
             return "session ended", []
         if utter in self.utter["utt_quit"]:
-            print("End comes after me")
-            get_followed_by_end(self.phase, "you shouldn't see this", self)
-            print(self.phase.ask())
+            get_followed_by_end(self.phase, "you sholdnt see this", self)
+
         if utter in self.utter["utt_hint"] or self.phase.confused_count > 1:
             become_hint(self.phase, self)
         if utter in self.utter["utt_help"]:
